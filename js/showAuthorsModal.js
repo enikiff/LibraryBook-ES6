@@ -10,16 +10,15 @@ class ShowAuthorsModal extends Library{
     $("#show-authors-button").on("click", () => {
       const showAuthorNames = gShowAuthorsModal.getAuthors();
       for (let i = 0; i < showAuthorNames.length; i++) {
-          $("#author-display-modal .modal-body ul").append(`<li>${showAuthorNames[i].author}</li>`);
+      $("#author-display-modal .modal-body ul").html(`<li>${showAuthorNames[i].author}</li>`);
       }
     });
   }
 }
 
 //Creates new library object
-ShowAuthorsModal.prototype = Object.create(Library.prototype);
+//ShowAuthorsModal.prototype = Object.create(Library.prototype);
 
 $(() => {
   window.gShowAuthorsModal = new ShowAuthorsModal();
-  //window.gShowAuthorsModal.init();
 });

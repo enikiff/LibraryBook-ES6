@@ -9,8 +9,7 @@ class RandomAuthorModal extends Library{
   _bindEvents() {
     $("#random-author-button").on("click", () => {
       const randomAuthorName = gRandomAuthorModal.getRandomAuthorName();
-      $("#author-display-modal .modal-header").html("Random to read: ");
-      $("#author-display-modal .modal-body ul").html(`<li>${randomAuthorName}</li>`);
+      $("#author-display-modal .modal-body ul").append(`<li>${randomAuthorName}</li>`);
     });
   }
 }

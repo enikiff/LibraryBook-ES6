@@ -1,3 +1,10 @@
+var bookShelfLength = 0;
+var currentPage = 1;
+var numResultsPerPage = 3;
+var totalPages = 0;
+var searchString = "";
+
+
 function spacesToCamelCase(str)
 {
   const splits = str.split(/(?=[A-Z]+)/); //splits string parameter on capital letters
@@ -14,10 +21,10 @@ function spacesToCamelCase(str)
 
 function bookify(arr)
 {
-  const tempArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    const myObj = new Object();
-    for (const key in arr[i]) {
+  var tempArr = [];
+  for (var i = 0; i < arr.length; i++) {
+    var myObj = new Object();
+    for (var key in arr[i]) {
         myObj[key] = arr[i][key];
     }
     tempArr.push(new Book(myObj));
@@ -25,7 +32,6 @@ function bookify(arr)
 
   return tempArr;
 }
-
 function formatDate(date) {
   if (!(date instanceof Date)) {
     console.log("This is not a valid Date object");

@@ -1,23 +1,29 @@
 class Library {
-  handleEventTrigger(sEvent, oData) {
+
+  handleEventTrigger(sEvent, oData)
+  {
     var oData = oData || {};
-    if(sEvent) {
+    if(sEvent)
+    {
       const event = new CustomEvent(sEvent, {'detail':oData});
       document.dispatchEvent(event);
     }
   }
 
-  addBook(book) {
-    for(let i = 0; i < window.bookShelf.length; i++) {
-      if(book.title.toLowerCase().trim() === window.bookShelf[i].title.toLowerCase().trim()){
-        console.log(`Sorry ${book.title} already exists.`);
-        return false;
+  addBook(book)
+  {
+      for(let i = 0; i < window.bookShelf.length; i++)
+      {
+        if(book.title.toLowerCase().trim() === window.bookShelf[i].title.toLowerCase().trim())
+          {
+          console.log(`Sorry ${book.title} already exists.`);
+          return false;
+          }
       }
-    }
-    console.log(`added ${book.title} to book shelf`);
-    window.bookShelf.push(book);
-    this.setStorage();
-    return true;
+      console.log(`added ${book.title} to book shelf`);
+      window.bookShelf.push(book);
+      this.setStorage();
+      return true;
   }
 
   removeBookByTitle(title) {
@@ -86,7 +92,7 @@ class Library {
 
   getBookIndex(title) {
     for (let i = 0; i < window.bookShelf.length; i++) {
-      if(window.bookShelf[i].title.toLowerCase().search(title.toLowerCase()) >= 0){
+      if(window.bookShelf[i].title.search(title) >= 0){
         return i;
       }
     }
@@ -133,26 +139,27 @@ class Library {
           return searchResults;
   }
 
-  getStorage() {
-    const arr = [];
-    const parsedObj = JSON.parse(localStorage.getItem("myLibrary"));
-    for (let i = 0; i < parsedObj.length; i++) {
-      arr.push(new Book(parsedObj[i]));
-    }
-    return arr;
-  }
+//   getStorage() {
+//     // let pageLimit = 3
+//     // let currentPage = req.params.currentPage || 1;
+//   //  $("#last").on('click', )
+//   //currentPage, pageLimit
+//     this._firePagination();
+//
+//     //pageLimit
+//
+// ;
+//
+//   }
 
   setStorage() {
-    localStorage.setItem('myLibrary', JSON.stringify(window.bookShelf));
-    return console.log("STORAGE HAS BEEN SET");
+
   }
 
-init() {
-    this.setStorage();
-}
-}
+
+};
     $(() => {
     window.myLibrary = new Library();
-    window.bookShelf = window.bookList;
-    window.myLibrary.init();
+     // window.bookShelf = window.bookList;
+
   });

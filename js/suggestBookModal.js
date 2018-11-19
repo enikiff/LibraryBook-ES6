@@ -10,7 +10,7 @@ class SuggestBooksModal extends Library{
 
   $("#random-book-button").on("click", $.proxy(this._suggestBookModal, this));
   $("#btnCloseSugBook").on("click", $.proxy(this._eraseSuggestModal, this));
-  $("#book-display-modal .close").on("click", $.proxy(this._eraseSuggestModal, this));
+  $("#book-display-modal").on("hidden.bs.modal", $.proxy(this._eraseSuggestModal, this));
 
   }
 
@@ -22,9 +22,9 @@ class SuggestBooksModal extends Library{
       $(formElement).append(`<p>Title: ${randomBook.title}</p>`);
       $(formElement).append(`<p>Author: ${randomBook.author}</p>`);
       $(formElement).append(`<p>Synopsis: ${randomBook.synopsis}</p>`);
-      $(formElement).append(`<p>Number of Pages: ${randomBook.numberOfPages}</p>`);
+      $(formElement).append(`<p>Number of Pages: ${randomBook.numPages}</p>`);
       $(formElement).append(`<p>Rating: ${randomBook.rating}</p>`);
-      $(formElement).append(`<p>Date: ${randomBook.publishDate}</p>`);
+      $(formElement).append(`<p>Date: ${randomBook.pubDate}</p>`);
     // SuggestBooksModal.prototype._displayStars(e){
     //           for(let i=0; i<5; i++) {
     //             let $star = $('<span>').addClass('fa fa-star');

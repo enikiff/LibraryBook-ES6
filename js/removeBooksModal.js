@@ -8,25 +8,35 @@ class RemoveBooksModal extends Library{
   }
 
   _bindEvents() {
-    $("#remove-books-modal").on("click", $.proxy(this._handleRemove, this));
-    $("#remove-books-modal").on("click", $.proxy(this._handleUpdate, this));
+    $("#remove-books-form").on("submit", $.proxy(this._handleRemove, this));
+    // $("#remove-books-modal").on("click", $.proxy(this._handleUpdate, this));
 
   }
 
-  _handleRemove() {
-  //  e.preventDefault();
-    const removeTitle = $("#title-remove-input").val();
-    gRemoveBooksModal.removeBookByTitle(removeTitle);
-    const removeAuthor = $("#author-remove-input").val();
-    gRemoveBooksModal.removeBookByAuthor(removeAuthor);
-    // $("#remove-books-modal form")[0].reset();
-    // this.handleEventTrigger('objUpdate', window.bookShelf);
+  _handleRemove(e) {
+    e.preventDefault();
+    let booksToRemoveString = $('#remove-books-form').serialize();
+    this.removeAjax(booksToRemoveString);
+    this.$container.modal('hide');
+    $("#remove-books-form")[0].reset();
   }
 
-  _handleUpdate(e) {
-    $("#remove-books-modal form")[0].reset();
-    this.handleEventTrigger('objUpdate', window.bookShelf);
-    }
+  removeAjax(qString){
+    $.ajax({
+      url: 'http://127.0.0.1:3000/library/deleteBy?'+ qString,
+      type: "DELETE",
+    }).done((res, req)=>
+    {
+      console.log(res);
+      console.log("Book was deleted.");
+      this.handleEventTrigger('pagUpdate');
+    }).fail(function (reg) {
+      console.log("Error deleting comment.");
+    });
+  }
+
+
+
 }
 
 //Creates new library object
