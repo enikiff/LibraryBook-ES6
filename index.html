@@ -26,8 +26,8 @@
       		<div class="loginmodal-container">
       			<h1>Login to Your Account</h1><br>
       		  <form>
-              <input type="text" name="email" placeholder="Email" />
-              <input type="password" name="password" placeholder="Password" />
+              <input id="emailLoginModal" type="text" onfocus="this.value=''" name="email" placeholder="Email" />
+              <input id="passwordLoginModal" type="password" onfocus="this.value=''" name="password" placeholder="Password" />
               <input type="submit" name="login" class="login loginmodal-submit" value="Login" />
       		  </form>
 
@@ -45,9 +45,9 @@
       <div class="registermodal-container">
         <h1>Register a New Account</h1><br>
         <form>
-          <input type="text" name="firstName" value="" placeholder="First Name" />
-          <input type="text" name="lastName" value="" placeholder="Last Name" />
-          <input type="text" name="email" placeholder="Email" />
+          <input type="text" name="firstName" onfocus="this.value=''" value="" placeholder="First Name" />
+          <input type="text" name="lastName" onfocus="this.value=''" value="" placeholder="Last Name" />
+          <input type="text" name="email" onfocus="this.value=''" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
           <input type="submit" name="register" class="register registermodal-submit" value="Register" />
         </form>
@@ -362,6 +362,9 @@
   <script src="js/removeBooksModal.js" charset="utf-8"></script>
   <script src="js/randomAuthorModal.js" charset="utf-8"></script>
   <script src="js/suggestBookModal.js" charset="utf-8"></script>
+  <script src="js/login.js" charset="utf-8"></script>
+  <script type="text/javascript">window.bookShelf = [];</script>
+
 
   <!-- Random Book Modal -->
 

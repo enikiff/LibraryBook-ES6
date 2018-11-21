@@ -30,6 +30,7 @@ class RemoveBooksModal extends Library{
       console.log(res);
       console.log("Book was deleted.");
       this.handleEventTrigger('pagUpdate');
+      this.handleEventTrigger('objUpdate');
     }).fail(function (reg) {
       console.log("Error.");
     });

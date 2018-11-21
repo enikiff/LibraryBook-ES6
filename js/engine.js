@@ -32,7 +32,7 @@ class Library {
         counter++;
       }
     }
-    this.setStorage();
+    //this.setStorage();
     return counter;
   }
 

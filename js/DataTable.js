@@ -82,6 +82,7 @@ _firePagination(currentPage, numResultsPerPage, qString)
     }).done(response => {
          //this.currentPage=bookify(response);
          window.bookShelf=bookify(response.books);
+         console.log(response);
          window.bookShelfLength = response.count;
          this.handleEventTrigger('objUpdate',window.bookShelf);
          _self._fireCalcTotalPages();
@@ -443,5 +444,5 @@ _firePagination(currentPage, numResultsPerPage, qString)
 //  window.gLibrary = new Library();
 $(() => {
   window.gDataTable = new DataTable();
-//  window.gDataTable.init();
+  //window.gDataTable.init();
 });

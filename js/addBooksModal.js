@@ -42,7 +42,7 @@ class AddBooksModal extends Library{
 
         _addQueueBooks() {
                   this.addBooks(this.arrayQueue);
-                  this.handleEventTrigger('objUpdate', window.bookShelf);
+                  this.handleEventTrigger('objUpdate');
                   this.handleEventTrigger('pagUpdate');
                   $("#add-books-counter").text("0");
 
