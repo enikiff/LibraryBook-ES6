@@ -13,12 +13,48 @@
   <div class="container-fluid">
 
     <!-- Log In Header -->
-    <!-- <div class="row log-in-header">
+    <div class="row log-in-header">
       <div class="col-md-12">
-        <span class="name-container">Welcome, Kyle Brothis</span>
+        <span class="name-container">Welcome, Egor!</span>
         <a href="javascript:void(0);" data-toggle="modal" data-target="#login-modal">logout</a>
       </div>
-    </div> -->
+    </div>
+
+    <!-- Log In Modal -->
+      <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+      		<div class="loginmodal-container">
+      			<h1>Login to Your Account</h1><br>
+      		  <form>
+              <input type="text" name="email" placeholder="Email" />
+              <input type="password" name="password" placeholder="Password" />
+              <input type="submit" name="login" class="login loginmodal-submit" value="Login" />
+      		  </form>
+
+      		  <div class="login-help">
+      			<a href="javascript:void(0);" data-toggle="modal" data-target="#register-modal">Register</a> - <a href="#">Forgot Password</a>
+      		  </div>
+      		</div>
+      	</div>
+      </div>
+    <!-- END OF LOGIN MODAL -->
+
+    <!-- Register Modal -->
+  <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="registermodal-container">
+        <h1>Register a New Account</h1><br>
+        <form>
+          <input type="text" name="firstName" value="" placeholder="First Name" />
+          <input type="text" name="lastName" value="" placeholder="Last Name" />
+          <input type="text" name="email" placeholder="Email" />
+          <input type="password" name="password" placeholder="Password" />
+          <input type="submit" name="register" class="register registermodal-submit" value="Register" />
+        </form>
+      </div>
+    </div>
+  </div>
+<!-- END OF REGISTER MODAL -->
 
     <!-- Header -->
     <header class="row">
@@ -57,9 +93,9 @@
           <input id="title-search-input" class="form-control" onfocus="this.value=''" type="text" placeholder="Title" name="title">
           <input id="author-search-input" class="form-control" onfocus="this.value=''" type="text" placeholder="Author" name="author">
         </div>
-        <button id="search-btn" type="submit" class="btn btn-default">Search</button>
-        <button id="random-author-button" class="btn btn-default pull-right" type="button" data-toggle="modal" data-target="#author-display-modal">Random Author</button>
-        <button id="show-authors-button" class="btn btn-default pull-right" type="button" data-toggle="modal" data-target="#author-display-modal">Show All Authors</button>
+        <button id="search-button" type="submit" class="btn btn-default">Search</button>
+        <button id="random-author-button" class="btn btn-default pull-right" type="button" data-toggle="modal" data-target="#random-author-modal">Random Author</button>
+        <button id="show-authors-button" class="btn btn-default pull-right" type="button" data-toggle="modal" data-target="#all-authors-modal">Show All Authors</button>
       </form>
 
     </nav>
@@ -222,20 +258,39 @@
     </div>
 
     <!-- Authors Modal -->
-    <div id="author-display-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div id="all-authors-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button id="btnCloseModal" class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title"></h4>
           </div>
-          <div class="modal-body">
-            <ul>
+          <div  class="modal-body">
+            <ul id="show-authors-names">
               <!-- jQuery will fill list items -->
             </ul>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+            <button id="btnCloseAuthorName" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="random-author-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button id="btnCloseModal" class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div  class="modal-body">
+            <ul id="random-author">
+              <!-- jQuery will fill list items -->
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button id="btnCloseAuthorName" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

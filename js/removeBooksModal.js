@@ -31,7 +31,7 @@ class RemoveBooksModal extends Library{
       console.log("Book was deleted.");
       this.handleEventTrigger('pagUpdate');
     }).fail(function (reg) {
-      console.log("Error deleting comment.");
+      console.log("Error.");
     });
   }
 

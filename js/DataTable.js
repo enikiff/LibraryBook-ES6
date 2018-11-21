@@ -6,33 +6,27 @@ class DataTable extends Library
       this.$container = $('#data-table');
       this.newBookArray = [];
       this._init();
+      //this.queryString = "";
       // this.bookShelfLength = 0;
       // this.currentPage = 1;
       // this.pageLimit = 3;
-
-
     }
 
     _init(){
       this._bindEvents();
-      window.bookShelf = this._firePagination(1,3);
+      this._firePagination(1,3);
       this._fireGetBookShelfLength();
-
     }
 
-    _bindEvents()
-    {
-
-        $(document).on('submit', $.proxy(this._handleSearch, this));
+    _bindEvents(){
+        $(document).on("submit", $.proxy(this._handleSearch,this));
         $(document).on('objUpdate', $.proxy(this._updateTable, this));
         $(document).on('pagUpdate', $.proxy(this._updatePaginate, this));
-        //$(document).on('click', $.proxy(this._updateStorage,this));
         $(document).on('click', '#edButton', $.proxy(this._handleEdit,this));
         $(document).on('click', '#delButton', $.proxy(this._handleDelete,this));
         $("#edit-books-modal form").on("submit", $.proxy(this._handleEditAdd, this));
         $("#cover-edit-input").on("change", $.proxy(this._handleImageUpload, this));
         $("#show-books-button").on("click", $.proxy(this._refreshAllBooks, this));
-
         $("#prev").on('click', $.proxy(this._handlePrevPage, this));
         $("#last").on('click', $.proxy(this._handleNextPage, this));
 
@@ -52,77 +46,71 @@ class DataTable extends Library
     }
   }
 
- _fireCalcTotalPages() {
-   window.totalPages = Math.ceil(window.bookShelfLength/window.numResultsPerPage);
-   $("#score").text(window.currentPage + ' / ' + totalPages);
- }
+  _fireCalcTotalPages(){
+     window.totalPages = Math.ceil(window.bookShelfLength/window.numResultsPerPage);
+     $("#score").text(window.currentPage + ' / ' + totalPages);
+  }
 
-
-
- _fireGetBookShelfLength()
-   {
-
-   let _self=this;
-     $.ajax(
-       {
+  _fireGetBookShelfLength(){
+      let _self=this;
+      $.ajax({
            url: "http://127.0.0.1:3000/Library/count",
            method: "GET",
            dataType: "json",
-       }).done(response =>
-       {
+      }).done(response => {
          window.bookShelfLength = response.bookCount;
          _self._fireCalcTotalPages();
-         console.log(window.bookShelfLength);
-       })
+      })
 
-   };
+  };
    //currentPage, pageLimit
-_firePagination(currentPage, numResultsPerPage)
+_firePagination(currentPage, numResultsPerPage, qString)
  {
+   var myUrl = "";
+   if (qString) {
+    myUrl = `http://127.0.0.1:3000/Library/${currentPage}/${numResultsPerPage}/searchBy?${qString}`
+   }else{
+    myUrl = `http://127.0.0.1:3000/Library/${currentPage}/${numResultsPerPage}/searchBy?`
+   }
+
    const _self = this;
    $.ajax(
-     {
-         url: `http://127.0.0.1:3000/Library/${currentPage}/${numResultsPerPage}`,
+    {
+         url: myUrl,
          method: "GET",
          dataType: "json",
-     }).done(response =>
-     {
-       //this.currentPage=bookify(response);
-         window.bookShelf=bookify(response);
+    }).done(response => {
+         //this.currentPage=bookify(response);
+         window.bookShelf=bookify(response.books);
+         window.bookShelfLength = response.count;
          this.handleEventTrigger('objUpdate',window.bookShelf);
          _self._fireCalcTotalPages();
-     }).fail(response =>
-     {
+    }).fail(response => {
          console.log("Error.");
-     });
+    });
  };
 
- _firePost(books)
-   {
+  _firePost(books){
 
- //var _self = this;
-     $.ajax({
+    //var _self = this;
+    $.ajax({
          url: "http://127.0.0.1:3000/Library",
          type: "POST",
          //contentType:"application/json; charset=utf-8",
          data: books,
-       }).done((res, req)=>
-       {
-         console.log(res, req);
-       }).fail(books =>
-       {
+    }).done((response)=> {
+         console.log(response);
+    }).fail(books => {
          console.log("Error posting book.");
-       });
-
-   };
- _fireDelete(id)
-   {
+    });
+  };
+  _fireDelete(id) {
      var _self = this;
      $.ajax({
-       url: this.url + "/"+id,
-       type: "DELETE",
+         url: this.url + "/"+id,
+         type: "DELETE",
        //data: id,
-     //  dataType: "text",
+       //  dataType: "text",
        //contentType:"text/html; charset=utf-8",
      }).done((res, req)=>
      {
@@ -271,18 +259,32 @@ _firePagination(currentPage, numResultsPerPage)
   _handleSearch(e)
     {
       e.preventDefault();
-      const myObj = {};
-      myObj.title = $("#search-form").find("#title-search-input".toLowerCase()).val();
-      //alert("I'm searching");
-      myObj.author = $("#search-form").find("#author-search-input".toLowerCase()).val();
-
-      this._makeTable(this.search(myObj));
-
+      const serArr = $("#search-form").serialize();
+      this.searchAjax(serArr,1,3);
+      $("#search-form")[0].reset();
     };
+
+    searchAjax(qString, currentPage, numResultsPerPage)
+  {
+    console.log(qString);
+      $.ajax({
+        url: `http://127.0.0.1:3000/library/${currentPage}/${numResultsPerPage}/searchBy?${qString}`,
+        type: "GET",
+      }).done((res, req)=> {
+        console.log(res);  //return found book
+        window.bookShelf = bookify(res.books);
+        window.bookShelfLength = res.count
+        this.handleEventTrigger('pagUpdate');
+
+        console.log("Book found.");
+      }).fail(function (reg) {
+        console.log("Error.");
+      });
+  }
 
   _updatePaginate(e){
     this._fireGetBookShelfLength();
-    this._firePagination(window.currentPage,window.numResultsPerPage);
+    this._firePagination(window.currentPage,window.numResultsPerPage,window.searchString);
   }
 
 
@@ -370,7 +372,9 @@ _firePagination(currentPage, numResultsPerPage)
                 else {
                 $(td).html(key === 'synopsis' ? `${book[key].substring(0,85)}...` : book[key]);
               }
-                tr.append(td);
+              if (key !== '_id' && key !== '__v') { // NOTE: stops id or v from being displayed in td
+                tr.append(td)
+              }
     }
     //append created editbutton to editTd
     //append editTd to tr

@@ -17,13 +17,23 @@ class Library {
         if(book.title.toLowerCase().trim() === window.bookShelf[i].title.toLowerCase().trim())
           {
           console.log(`Sorry ${book.title} already exists.`);
-          return false;
           }
+          return false;
       }
       console.log(`added ${book.title} to book shelf`);
       window.bookShelf.push(book);
-      this.setStorage();
+      //this.setStorage();
       return true;
+  }
+  addBooks(books) {
+    let counter = 0;
+    for (let i = 0; i < books.length; i++) {
+      if (this.addBook(books[i])) {
+        counter++;
+      }
+    }
+    this.setStorage();
+    return counter;
   }
 
   removeBookByTitle(title) {
@@ -99,20 +109,9 @@ class Library {
     return false;
   }
 
-  addBooks(books) {
-    let counter = 0;
-    for (let i = 0; i < books.length; i++) {
-      if (this.addBook(books[i])) {
-        counter++;
-      }
-    }
-    this.setStorage();
-    return counter;
-  }
-
   getAuthors() {
     if (window.bookShelf.length) {
-      return window.bookShelf.unique("title");
+      return window.bookShelf.unique("author");
     }
     return [];
   }
@@ -138,25 +137,6 @@ class Library {
           searchResults = searchResults.unique("title");
           return searchResults;
   }
-
-//   getStorage() {
-//     // let pageLimit = 3
-//     // let currentPage = req.params.currentPage || 1;
-//   //  $("#last").on('click', )
-//   //currentPage, pageLimit
-//     this._firePagination();
-//
-//     //pageLimit
-//
-// ;
-//
-//   }
-
-  setStorage() {
-
-  }
-
-
 };
     $(() => {
     window.myLibrary = new Library();

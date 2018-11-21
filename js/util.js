@@ -2,7 +2,7 @@ var bookShelfLength = 0;
 var currentPage = 1;
 var numResultsPerPage = 3;
 var totalPages = 0;
-var searchString = "";
+//var searchString = "";
 
 
 function spacesToCamelCase(str)
